@@ -1,35 +1,65 @@
 <?php
 class EmpWage
 {
-    public $WAGE_PER_HOUR = 20;
-    public $FULL_TIME_WORKING_HOURS = 8;
-    public $PART_TIME_WORKING_HOURS = 4;
+    const WAGE_PER_HOUR = 20;
+    const FULL_TIME_WORKING_HOURS = 8;
+    const PART_TIME_WORKING_HOURS = 4;
+    const IS_FULL_TIME = 2;
+    const IS_PART_TIME = 1;
+    const IS_ABSENT = 0;
+    const WORKING_DAYS_PER_MONTH = 20;
 
-
-    // function to check employee is present or absent
+    //Function to Check Employee is Present, part-time or Absent
+     
     function empAttendance()
     {
         $empCheck = rand(0, 2);
         switch ($empCheck) {
-            case 1:
-                echo "Employee is present and Works as Part time Employee\n";
-                $dailyWage = $this->WAGE_PER_HOUR * $this->PART_TIME_WORKING_HOURS; //Daily wage calculation for Partime employee
-                echo "Employee Daily Wage is : $dailyWage ";
+
+            case EmpWage::IS_FULL_TIME:
+                echo "Full Time Employee\n";
+                return EmpWage ::FULL_TIME_WORKING_HOURS;
                 break;
 
-            case 2:
-                echo "Employee is present and Works as Full time Employee\n";
-                $dailyWage =  $this->WAGE_PER_HOUR *  $this->FULL_TIME_WORKING_HOURS; //Daily wage calculation for fulltime employee
-                echo "Employee Daily Wage is :  $dailyWage ";
+            case EmpWage :: IS_PART_TIME:
+                echo "Part Time Employee\n";
+                return EmpWage :: PART_TIME_WORKING_HOURS;
                 break;
 
             default:
                 echo "Employee is Absent\n";
+                return 0;
                 break;
         }
     }
-}
 
-// object creation of class
-$employeeWage = new EmpWage();
-$employeeWage->empAttendance();
+  
+    // Function to Calculate Daily Wage
+    function dailyWage()
+    {
+        $totalHrs = $this->empAttendance();
+        $dailyWage = EmpWage ::WAGE_PER_HOUR * $totalHrs;
+        echo "Total Working Hours : " . $totalHrs . "\n";
+        echo "Daily Wage : " . $dailyWage . "\n\n";
+        return $dailyWage;
+    }
+
+   
+    //Function to Calculate Monthly Wage
+    //calculating monthly wage according to working hours
+    //calling dailyWage() function to get daily wage
+    function monthlyWage()
+    {
+        $monthlyWage = 0;
+        for ($i = 1; $i <= EmpWage ::WORKING_DAYS_PER_MONTH; $i++) {
+            echo "Day : " . $i . "\n";
+            $dailyWage = $this->dailyWage();
+            $monthlyWage += $dailyWage;
+        }
+        echo "Total Monthly Wage : " . $monthlyWage . "\n\n";
+    }
+}
+//Creating object
+$empWage = new EmpWage();
+$empWage->monthlyWage();
+?>
