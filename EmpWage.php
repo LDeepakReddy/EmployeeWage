@@ -74,5 +74,4 @@ class EmpWage
 }
 //Creating object
 $empWage = new EmpWage();
-$empWage -> dailyWage();
 $empWage->monthlyWage();
