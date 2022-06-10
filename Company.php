@@ -1,5 +1,5 @@
 <!-- <?php
-include 'EmpWage.php';
+
 
 class CompanyDetails
 {

@@ -52,15 +52,6 @@ class EmpWage
         }
     }
 
-    function userInput()
-    {
-        $company = readline("Enter the name of Company : ");
-        echo "Wage for $company Employee \n ";
-        // $wagePerHour = readline("Enter the wage per hour : ");
-        // $workingDaysPerMonth = readline("Enter working Days per month : ");
-        // $workingHoursPerMonth = readline ("ENter total working hours per month : ");
-        $this->monthlyWage();
-    }
 
 
     // Function to Calculate Daily Wage
@@ -82,8 +73,10 @@ class EmpWage
         while (
             $this->totalWorkingHours <= $this->workingHoursPerMonth &&
             $this->totalWorkingDays < $this->workingDaysPerMonth
+          
         ) {
             $this->totalWorkingDays++;
+            
             echo "Day : " . $this->totalWorkingDays . "\n";
             $dailyWage = $this->dailyWage();
             $this->monthlyWage += $dailyWage;
@@ -95,9 +88,27 @@ class EmpWage
 
         echo "Total Monthly Wage : $this->monthlyWage \n\n";
     }
+
+    
+    function userInput()
+    {
+        $company = readline("Enter the name of Company : ");
+        echo "Wage for $company Employee \n ";
+        // $wagePerHour = readline("Enter the wage per hour : ");
+        // $workingDaysPerMonth = readline("Enter working Days per month : ");
+        // $workingHoursPerMonth = readline ("ENter total working hours per month : ");
+        $this->monthlyWage();
+    }
 }
 //Creating object
-$company1 = new EmpWage(25, 24, 89);
-$company1->userInput();
-$company2 = new EmpWage(49, 24, 97);
-$company2->userInput();
+$company1 = new EmpWage(25,24,89);
+
+$company2 = new EmpWage(49,24,97);
+$company3 = new EmpWage(54,25,74);
+$company4 = new EmpWage(40,29,88);
+
+$companys = array($company1,$company2,$company3,$company4);
+foreach ($companys as $WageForCompanies){
+    $WageForCompanies->userInput();
+}
+
