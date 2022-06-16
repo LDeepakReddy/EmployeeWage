@@ -1,5 +1,5 @@
 <?php
-// include 'Company.php';
+include "EmpInterface.php";
 class EmpWage
 {
 
@@ -73,10 +73,10 @@ class EmpWage
         while (
             $this->totalWorkingHours <= $this->workingHoursPerMonth &&
             $this->totalWorkingDays < $this->workingDaysPerMonth
-          
+
         ) {
             $this->totalWorkingDays++;
-            
+
             echo "Day : " . $this->totalWorkingDays . "\n";
             $dailyWage = $this->dailyWage();
             $this->monthlyWage += $dailyWage;
@@ -89,7 +89,7 @@ class EmpWage
         echo "Total Monthly Wage : $this->monthlyWage \n\n";
     }
 
-    
+
     function userInput()
     {
         $company = readline("Enter the name of Company : ");
@@ -101,14 +101,13 @@ class EmpWage
     }
 }
 //Creating object
-$company1 = new EmpWage(25,24,89);
+$company1 = new EmpWage(25, 24, 89);
 
-$company2 = new EmpWage(49,24,97);
-$company3 = new EmpWage(54,25,74);
-$company4 = new EmpWage(40,29,88);
+$company2 = new EmpWage(49, 24, 97);
+$company3 = new EmpWage(54, 25, 74);
+$company4 = new EmpWage(40, 29, 88);
 
-$companys = array($company1,$company2,$company3,$company4);
-foreach ($companys as $WageForCompanies){
+$companys = array($company1, $company2, $company3, $company4);
+foreach ($companys as $WageForCompanies) {
     $WageForCompanies->userInput();
 }
-
