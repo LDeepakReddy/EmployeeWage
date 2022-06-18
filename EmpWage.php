@@ -1,15 +1,16 @@
 <?php
 include "EmpInterface.php";
-class EmpWage
+include "CompanyLIst.php";
+class EmpWage implements EmployeeWageInt
 {
-
+//constant variables
     const FULL_TIME_WORKING_HOURS = 8;
     const PART_TIME_WORKING_HOURS = 4;
     const IS_FULL_TIME = 2;
     const IS_PART_TIME = 1;
     const IS_ABSENT = 0;
 
-
+    public $companyName;
     public $wagePerHour;
     public $workingDaysPerMonth;
     public $workingHoursPerMonth;
@@ -21,8 +22,9 @@ class EmpWage
 
 
 
-    public function __construct($wage, $days, $hours)
+    public function __construct($companyName, $wage, $days, $hours)
     {
+        $this->companyName = $companyName;
         $this->wagePerHour = $wage;
         $this->workingDaysPerMonth = $days;
         $this->workingHoursPerMonth = $hours;
@@ -52,8 +54,6 @@ class EmpWage
         }
     }
 
-
-
     // Function to Calculate Daily Wage
     function dailyWage()
     {
@@ -71,11 +71,12 @@ class EmpWage
     function monthlyWage()
     {
         while (
-            $this->totalWorkingHours <= $this->workingHoursPerMonth &&
-            $this->totalWorkingDays < $this->workingDaysPerMonth
+            $this->totalWorkingDays < $this->workingDaysPerMonth &&
+            $this->totalWorkingHours <= $this->workingHoursPerMonth
+
 
         ) {
-            $this->totalWorkingDays++;
+
 
             echo "Day : " . $this->totalWorkingDays . "\n";
             $dailyWage = $this->dailyWage();
@@ -87,27 +88,9 @@ class EmpWage
         echo "Total Working Hours : $this->totalWorkingHours\n";
 
         echo "Total Monthly Wage : $this->monthlyWage \n\n";
-    }
-
-
-    function userInput()
-    {
-        $company = readline("Enter the name of Company : ");
-        echo "Wage for $company Employee \n ";
-        // $wagePerHour = readline("Enter the wage per hour : ");
-        // $workingDaysPerMonth = readline("Enter working Days per month : ");
-        // $workingHoursPerMonth = readline ("ENter total working hours per month : ");
-        $this->monthlyWage();
+        return $this->monthlyWage;
     }
 }
-//Creating object
-$company1 = new EmpWage(25, 24, 89);
 
-$company2 = new EmpWage(49, 24, 97);
-$company3 = new EmpWage(54, 25, 74);
-$company4 = new EmpWage(40, 29, 88);
-
-$companys = array($company1, $company2, $company3, $company4);
-foreach ($companys as $WageForCompanies) {
-    $WageForCompanies->userInput();
-}
+$companies = new CompanyList();
+$companies->companies();
