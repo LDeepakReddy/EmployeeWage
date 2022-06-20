@@ -17,9 +17,9 @@ class EmpWage implements EmployeeWageInt
 
     public $workingHours = 0;
     public $monthlyWage = 0;
-    public $totalWorkingDays = 0;
+    public $totalWorkingDays=1;
     public $totalWorkingHours = 0;
-
+  
 
 
     public function __construct($companyName, $wage, $days, $hours)
@@ -69,20 +69,23 @@ class EmpWage implements EmployeeWageInt
     //calculating monthly wage according to working hours
     //calling dailyWage() function to get daily wage
     function monthlyWage()
+   
     {
+       
+        
+
         while (
-            $this->totalWorkingDays < $this->workingDaysPerMonth &&
+            $this->totalWorkingDays <= $this->workingDaysPerMonth &&
             $this->totalWorkingHours <= $this->workingHoursPerMonth
 
 
         ) {
-
-
             echo "Day : " . $this->totalWorkingDays . "\n";
             $dailyWage = $this->dailyWage();
             $this->monthlyWage += $dailyWage;
             $this->totalWorkingHours += $this->workingHours;
             $this->totalWorkingDays++;
+           
         }
         echo "Total Working Days : $this->totalWorkingDays\n";
         echo "Total Working Hours : $this->totalWorkingHours\n";
@@ -90,6 +93,8 @@ class EmpWage implements EmployeeWageInt
         echo "Total Monthly Wage : $this->monthlyWage \n\n";
         return $this->monthlyWage;
     }
+
+
 }
 
 $companies = new CompanyList();

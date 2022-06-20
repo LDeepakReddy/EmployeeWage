@@ -4,7 +4,7 @@
 class CompanyList{
 
     public function companies(){
-        $companyName = array();
+        $companyName = array();  
         $totalWage = array();
         $n = readline("Enter the number of companies");
         for($i=0; $i < $n; $i++){
