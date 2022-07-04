@@ -1,101 +1,125 @@
 <?php
+
 include "EmpInterface.php";
-include "CompanyLIst.php";
-class EmpWage implements EmployeeWageInt
+include "CompanyList.php";
+
+class EmployeeWage implements EmployeeWageInterface
 {
-//constant variables
-    const FULL_TIME_WORKING_HOURS = 8;
-    const PART_TIME_WORKING_HOURS = 4;
+
     const IS_FULL_TIME = 2;
     const IS_PART_TIME = 1;
-    const IS_ABSENT = 0;
+    const FULL_TIME_WORKING_HOURS = 8;
+    const PART_TIME_WORKING_HOURS = 4;
 
-    public $companyName;
-    public $wagePerHour;
-    public $workingDaysPerMonth;
-    public $workingHoursPerMonth;
-
-    public $workingHours = 0;
-    public $monthlyWage = 0;
-    public $totalWorkingDays=1;
+    public $maxWorkingDays = 0;
+    public $maxWorkingHours = 0;
+    public $wagePerHour = 0;
     public $totalWorkingHours = 0;
-  
+    public $workingDays = 0;
+    public $monthlyWage = 0;
+    public $workingHours = 0;
+    public $array = [];
+    public $array1 = [];
+    public $companyName;
+    public $dailyWage = 0;
+    public $companyArray = [];
 
 
-    public function __construct($companyName, $wage, $days, $hours)
+
+    public function __construct($companyName, $wagePerHour, $maxWorkingDays, $maxWorkingHours)
     {
+
         $this->companyName = $companyName;
-        $this->wagePerHour = $wage;
-        $this->workingDaysPerMonth = $days;
-        $this->workingHoursPerMonth = $hours;
+        $this->maxWorkingDays = $maxWorkingDays;
+        $this->maxWorkingHours = $maxWorkingHours;
+        $this->wagePerHour = $wagePerHour;
+        $this->companyArray = [$this->companyName, $this->wagePerHour, $this->maxWorkingDays, $this->maxWorkingHours];
     }
 
-    //Function to Check Employee is Present, part-time or Absent
-
-    function empAttendance()
+    //function to check employee attendence
+    function attendenceCheck()
     {
-        $empCheck = rand(0, 2);
-        switch ($empCheck) {
+        $checkAttendance = rand(0, 2);
+        switch ($checkAttendance) {
 
-            case EmpWage::IS_FULL_TIME:
-                echo "Full Time Employee\n";
-                return EmpWage::FULL_TIME_WORKING_HOURS;
+            case EmployeeWage::IS_PART_TIME :
+                $this->workingHours = EmployeeWage::PART_TIME_WORKING_HOURS;
                 break;
+            case EmployeeWage::IS_FULL_TIME :
 
-            case EmpWage::IS_PART_TIME:
-                echo "Part Time Employee\n";
-                return EmpWage::PART_TIME_WORKING_HOURS;
+                $this->workingHours = EmployeeWage::FULL_TIME_WORKING_HOURS;
                 break;
-
             default:
-                echo "Employee is Absent\n";
-                return 0;
-                break;
+                $this->workingHours = 0;
+        }
+        $this->dailyWage = $this->workingHours * $this->wagePerHour;
+    }
+
+    //function to store daily wage along with total wage
+    function printArray()
+    {
+        //Printing values from the array 
+        foreach ($this->array as $this->workingDays => $this->dailyWage) {
+            echo "Day" . $this->workingDays . " -> " . $this->dailyWage . " ";
+        }
+        echo "\nTotal monthly wage for the employee is :  " . $this->monthlyWage . "\n";
+    }
+
+    //function to calculate employee wage
+    function calculateEmployeeWage()
+    {
+
+        while ($this->workingDays < $this->maxWorkingDays && $this->totalWorkingHours < $this->maxWorkingHours) {
+
+            EmployeeWage::attendenceCheck();
+
+            $this->workingDays++;
+            $this->totalWorkingHours +=  $this->workingHours;
+
+            $this->array[$this->workingDays] = $this->dailyWage;
         }
     }
 
-    // Function to Calculate Daily Wage
-    function dailyWage()
+    //function to print employee wage
+    function printEmployeeWage()
     {
-        $this->workingHours =  $this->empAttendance();
-        $dailyWage = $this->wagePerHour * $this->workingHours;
-        echo "Total Working Hours : " . $this->workingHours . "\n";
-        echo "Daily Wage : " . $dailyWage . "\n\n";
-        return $dailyWage;
+
+        EmployeeWage::calculateEmployeeWage();
+
+        $this->monthlyWage = $this->totalWorkingHours * $this->wagePerHour;
     }
 
-
-    //Function to Calculate Monthly Wage
-    //calculating monthly wage according to working hours
-    //calling dailyWage() function to get daily wage
-    function monthlyWage()
-   
+    public function totalEmpArray()
     {
-       
-        
 
-        while (
-            $this->totalWorkingDays <= $this->workingDaysPerMonth &&
-            $this->totalWorkingHours <= $this->workingHoursPerMonth
+        $this->array1[$this->companyName] = $this->companyArray;
+        foreach ($this->array1 as $this->companyName => $this->companyArray) {
+            EmployeeWage::printEmployeeWage();
+            $this->array[$this->workingDays] = $this->dailyWage;
+            echo "--- " . $this->companyName . "--- \n";
 
-
-        ) {
-            echo "Day : " . $this->totalWorkingDays . "\n";
-            $dailyWage = $this->dailyWage();
-            $this->monthlyWage += $dailyWage;
-            $this->totalWorkingHours += $this->workingHours;
-            $this->totalWorkingDays++;
-           
+            foreach ($this->array as $this->workingDays => $this->dailyWage) {
+                echo "Day" . $this->workingDays . " -> " . $this->dailyWage . ", ";
+            }
+            echo "\nTotal monthly wage of $this->companyName :  " . $this->monthlyWage . " \n";
+            echo " ";
         }
-        echo "Total Working Days : $this->totalWorkingDays\n";
-        echo "Total Working Hours : $this->totalWorkingHours\n";
-
-        echo "Total Monthly Wage : $this->monthlyWage \n\n";
-        return $this->monthlyWage;
     }
 
-
+    // function queryByCompany(){
+    //     $name = readline("Enter the name of the company to get the data ");
+    //     for($i=0;$i < count($this->companyList);$i++){
+    //        if($name == $this->companyList[$i]){
+    //           $totalEmpArray();
+  
+    //        }else{
+    //         echo "No records of that company\n";
+    //        }
+    //     }
+    //    }
 }
+//call emplogeWage objects
 
-$companies = new CompanyList();
-$companies->companies();
+$empWage = new MultipleCompanies();
+
+$empWage->companyArray();

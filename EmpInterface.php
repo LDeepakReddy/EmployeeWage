@@ -1,9 +1,13 @@
 <?php
-//functions to be implemented inside the EmployeeWage class
 
-interface EmployeeWageInt
+interface EmployeeWageInterface
 {
-    public function empAttendance();
-    public function dailyWage();
-    public function monthlyWage();
+
+    public function attendenceCheck();
+    public function printEmployeeWage();
+    public function calculateEmployeeWage();
+    public function TotalEmpArray();
+
 }
+
+?>

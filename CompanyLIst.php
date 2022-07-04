@@ -1,30 +1,22 @@
 <?php
+class MultipleCompanies
+{
+    public $companyList = [];
 
+    function companyArray()
+    {
+        $company1 = new EmployeeWage("ABC", 25, 26, 100);
+        $company2 = new EmployeeWage("DEF", 30, 26, 80);
+        $company3 = new EmployeeWage("GHI", 20, 24, 120);
+        $company4 = new EmployeeWage("JKL",54,24,100);
+        $company5 = new EmployeeWage("MNO",78,27,98);
 
-class CompanyList{
-
-    public function companies(){
-        $companyName = array();  
-        $totalWage = array();
-        $n = readline("Enter the number of companies");
-        for($i=0; $i < $n; $i++){
-            $companyName[$i] = readline("Enter the company name : ");
-            $wagePerHour = readline("Enter the wage per hour : ");
-            $workingDaysPerMonth = readline("Enter the maximum working Days per month");
-            $workingHoursPerMonth = readline ("Enter the maximum working Hours per month ");
-
-            echo "Employee wage calculation of $companyName[$i] \n";
-
-            $emp = new EmpWage($companyName,$wagePerHour,$workingDaysPerMonth,$workingHoursPerMonth);
-            $totalWage[$i] = $emp->monthlyWage();
-        }
-        for ($i = 0; $i < $n ; $i++){
-            echo "Company Name :  $companyName[$i] \n";
-            echo "Total salary :  $totalWage[$i] \n";
+        $companyList = [$company1, $company2, $company3,$company4,$company5];
+        for($i = 0; $i < count($companyList); $i++){
+            $companyList[$i]->totalEmpArray();
+            echo " ";
         }
 
     }
+   
 }
-
-
-?>
