@@ -99,7 +99,7 @@ class EmployeeWage implements EmployeeWageInterface
             echo "--- " . $this->companyName . "--- \n";
 
             foreach ($this->array as $this->workingDays => $this->dailyWage) {
-                echo "Day" . $this->workingDays . " -> " . $this->dailyWage . ", ";
+               // echo "Day" . $this->workingDays . " -> " . $this->dailyWage . ", ";
             }
             echo "\nTotal monthly wage of $this->companyName :  " . $this->monthlyWage . " \n";
             echo " ";
